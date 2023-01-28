@@ -1,68 +1,86 @@
+import 'package:akht2r/core/provider/theme_provider.dart';
 import 'package:akht2r/feature/screens/categories.dart';
 import 'package:akht2r/feature/screens/favourites_screen.dart';
 import 'package:akht2r/feature/widget/main_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../models/meal_model.dart';
+import '../../core/provider/app_provider.dart';
+import '../../core/provider/language_provider.dart';
+
 
 class TabsScreen extends StatefulWidget {
+  static const routeName = 'tabs_screen';
+  const TabsScreen({super.key});
+
 
   @override
   State<TabsScreen> createState() => _TabsScreenState();
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  int currentIndex = 0;
 
+  int currentIndex = 0;
   List<Map<String,Object>>? pages ;
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Provider.of<MealProvider>(context,listen: false).getData();
+      Provider.of<ThemeProvider>(context,listen: false).getThemeMode();
+      Provider.of<ThemeProvider>(context,listen: false).getThemeColors();
+      Provider.of<LanguageProvider>(context,listen: false).getLan();
+      super.initState();
+    });
+  }
+
   void changeIndex(int newIndex) {
     setState(() {
       currentIndex=newIndex;
     });
   }
-@override
-  void initState() {
-  pages=[{
-    'page': const CategoriesScreen(),
-    'title': 'Categories',
-  },{
-    'page':  FavoritesScreen(),
-    'title': 'Favorites',
-  }];
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      drawer:  MainDrawer(),
+    var lan = Provider.of<LanguageProvider>(context,listen: false);
+    pages=[{
+      'page': const CategoriesScreen(),
+      'title': lan.getTexts('categories'),
+    },{
+      'page':  const FavoritesScreen(),
+      'title': lan.getTexts('your_favorites'),
+    }];
+    return Directionality(
+        textDirection:  lan.isEn?TextDirection.ltr:TextDirection.rtl,
+        child: Scaffold(
+      drawer:  const MainDrawer(),
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color:Theme.of(context).iconTheme.color,
-        ),
-        title: Text(pages![currentIndex]['title'] as String),
+         title: Text(pages![currentIndex]['title'] as String),
       ),
       body: pages![currentIndex]['page'] as Widget,
       bottomNavigationBar: BottomNavigationBar(
-
-        items: [
+        items:  [
           BottomNavigationBarItem(
-            icon: IconButton(onPressed: (){}, icon: const Icon(Icons.category)),
-            label: 'categories',
+            icon: const Icon(Icons.category),
+            label:lan.getTexts('categories'),
           ),
           BottomNavigationBarItem(
-            icon: IconButton(onPressed: (){}, icon: const Icon(Icons.favorite_border_outlined)),
-            label: 'favorites',
+            icon:const Icon(Icons.favorite_border_outlined),
+            label:lan.getTexts('your_favorites'),
+
           ),
         ],
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         onTap: changeIndex,
         currentIndex: currentIndex,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black54,
+        backgroundColor: Theme.of(context).primaryColor,
+        unselectedItemColor: Colors.white,
+        selectedItemColor: Theme.of(context).accentColor,
       ),
-    );
+    ));
   }
-
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    // animationController.dispose() instead of your controller.dispose
+  }
 }
