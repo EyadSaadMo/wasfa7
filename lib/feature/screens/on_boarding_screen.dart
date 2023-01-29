@@ -5,6 +5,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import '../../core/provider/language_provider.dart';
+import '../../core/provider/theme_provider.dart';
 import 'filter_screen.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -19,7 +20,6 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var primaryColor = Theme.of(context).primaryColor;
     var lan = Provider.of<LanguageProvider>(context, listen: true);
     return Scaffold(
       body: Stack(
@@ -39,19 +39,19 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                     Container(
                       alignment: Alignment.center,
                       width: 300,
-                      color:primaryColor,
+                      color:Theme.of(context).appBarTheme.backgroundColor,
                       padding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                       child: Text(
                         lan.getTexts("drawer_name"),
-                        style: Theme.of(context).textTheme.headline4,
+                        style: Theme.of(context).textTheme.bodyText1,
                         softWrap: true,
                         overflow: TextOverflow.fade,
                       ),
                     ),
                     Container(
                       width: 350,
-                      color:primaryColor,
+                      color:Theme.of(context).appBarTheme.backgroundColor,
                       padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       margin: const EdgeInsets.only(bottom: 20),
@@ -59,14 +59,14 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                         children: [
                           Text(
                             lan.getTexts('drawer_switch_title'),
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.bodyText1,
                             textAlign: TextAlign.center,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(lan.getTexts('drawer_switch_item2'),
-                                  style: Theme.of(context).textTheme.headline6),
+                                  style: Theme.of(context).textTheme.bodyText1),
                               Switch(
                                 value: lan.isEn,
                                 onChanged: (newValue) {
@@ -74,9 +74,32 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                                       listen: false)
                                       .changeLan(newValue);
                                 },
+                                // activeTrackColor: Theme.of(context).textTheme.bodyText1!.color,
+                                // activeColor: Theme.of(context).appBarTheme.backgroundColor,
+                                // inactiveThumbColor: Theme.of(context).appBarTheme.backgroundColor,
+                                activeTrackColor:
+                                Provider.of<ThemeProvider>(context, listen: true).tm ==
+                                    ThemeMode.light
+                                    ? Colors.white
+                                    : Colors.black,
+                                inactiveTrackColor:
+                                Provider.of<ThemeProvider>(context, listen: true).tm ==
+                                    ThemeMode.light
+                                    ? Colors.white
+                                    : Colors.black,
+                                activeColor:
+                                Provider.of<ThemeProvider>(context, listen: true).tm ==
+                                    ThemeMode.light
+                                    ?Theme.of(context).textTheme.bodyText2!.color
+                                    : Colors.white,
+                                inactiveThumbColor:
+                                Provider.of<ThemeProvider>(context, listen: true).tm ==
+                                    ThemeMode.light
+                                    ?Theme.of(context).textTheme.bodyText2!.color
+                                    : Colors.white,
                               ),
                               Text(lan.getTexts('drawer_switch_item1'),
-                                  style: Theme.of(context).textTheme.headline6),
+                                  style: Theme.of(context).textTheme.bodyText1),
                             ],
                           ),
                         ],
@@ -103,13 +126,9 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 child: MaterialButton(
                   padding: lan.isEn ? const EdgeInsets.all(7) : const EdgeInsets.all(0),
-                  color: primaryColor,
+                  color: Theme.of(context).appBarTheme.backgroundColor,
                   child: Text(lan.getTexts('start'),
-                      style: TextStyle(
-                          color: useWhiteForeground(primaryColor)
-                              ? Colors.white
-                              : Colors.black,
-                          fontSize: 25),),
+                      style: Theme.of(context).textTheme.bodyText1),
                   onPressed: () async {
                     Navigator.of(ctx)
                         .pushReplacementNamed(TabsScreen.routeName);
@@ -155,7 +174,7 @@ class Indicator extends StatelessWidget {
       height: 15,
       width: 15,
       decoration: BoxDecoration(
-        color: Theme.of(ctx).accentColor,
+        color: Theme.of(ctx).appBarTheme.backgroundColor,
         shape: BoxShape.circle,
       ),
     );

@@ -56,10 +56,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
             slivers: [
               SliverAppBar(
                 pinned: false,
-                backgroundColor: widget.fromOnBoarding?Theme.of(context).canvasColor:Theme.of(context).primaryColor,
+                 backgroundColor: widget.fromOnBoarding?Theme.of(context).canvasColor:Theme.of(context).appBarTheme.backgroundColor,
+                 // backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+                iconTheme: IconThemeData(
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 title: widget.fromOnBoarding?null:Text(
                   lan.getTexts('filters_appBar_title'),
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 elevation: widget.fromOnBoarding?0:5,
               ),
@@ -68,7 +72,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   padding: const EdgeInsets.all(20),
                   child: Text(
                     lan.getTexts('filters_screen_title'),
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
                 ),

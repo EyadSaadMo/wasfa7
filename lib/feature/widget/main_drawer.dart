@@ -14,12 +14,12 @@ class MainDrawer extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        color: Theme.of(context).textTheme.bodyText2!.color,
+        color: Theme.of(context).iconTheme.color,
         size: 26,
       ),
       title: Text(
         title,
-        style: Theme.of(context).textTheme.bodyText2,
+        style: Theme.of(context).textTheme.bodyText1,
       ),
 
     );
@@ -29,7 +29,7 @@ class MainDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     var lan = Provider.of<LanguageProvider>(context,listen: true);
     return Drawer(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       child: Column(
         children: <Widget>[
           Container(
@@ -40,10 +40,7 @@ class MainDrawer extends StatelessWidget {
             color: Theme.of(context).appBarTheme.backgroundColor,
             child: Text(
               lan.getTexts('drawer_name'),
-              style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 30,
-                  color: Theme.of(context).primaryColor),
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 30),
             ),
           ),
           const SizedBox(
@@ -67,26 +64,27 @@ class MainDrawer extends StatelessWidget {
             },
             child: buildListTile(lan.getTexts('drawer_item3'), Icons.color_lens_outlined,context),
           ),
-          Divider(height: 1.0,color: Colors.black,),
+          const Divider(height: 1.0,color: Colors.black,),
           Container(
             alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(top: 20,right: 22),
-            child: Text(lan.getTexts('drawer_switch_title'),style: Theme.of(context).textTheme.headline6,),
+            padding: const EdgeInsets.only(top: 20,right: 22),
+            child: Text(lan.getTexts('drawer_switch_title'),style: Theme.of(context).textTheme.bodyText1,textAlign: TextAlign.center,),
           ),
           Padding(
             padding:  EdgeInsets.only(right: (lan.isEn? 0 :20),left: (lan.isEn? 20:0),bottom: (lan.isEn? 20:0),),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(lan.getTexts('drawer_switch_item2'),style: Theme.of(context).textTheme.headline6,),
+                Text(lan.getTexts('drawer_switch_item2'),style: Theme.of(context).textTheme.bodyText1,),
                 Switch(value: Provider.of<LanguageProvider>(context,listen: true).isEn,
                     onChanged: (newValue){
                       Provider.of<LanguageProvider>(context,listen: false).changeLan(newValue);
                       Navigator.pop(context);
                     },
                   inactiveThumbColor: Provider.of<ThemeProvider>(context,listen: true).tm == ThemeMode.light?null:Colors.black,
+                  activeColor: Provider.of<ThemeProvider>(context,listen: true).tm == ThemeMode.light?Colors.white:null,
                 ),
-                Text(lan.getTexts('drawer_switch_item1'),style: Theme.of(context).textTheme.headline6,),
+                Text(lan.getTexts('drawer_switch_item1'),style: Theme.of(context).textTheme.bodyText1,),
               ],
             ),
           ),

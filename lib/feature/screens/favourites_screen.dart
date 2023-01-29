@@ -20,7 +20,7 @@ class FavoritesScreen extends StatelessWidget {
     final List<Meal> favoriteMeals = Provider.of<MealProvider>(context,listen: true).favoriteMeals;
     if (favoriteMeals.isEmpty) {
       return  Center(
-        child: Text(lan.getTexts('favorites_text'),style: Theme.of(context).textTheme.headline6,),
+        child: Text(lan.getTexts('favorites_text'),style: Theme.of(context).textTheme.bodyText2,),
       );
     }else {
       return Directionality(

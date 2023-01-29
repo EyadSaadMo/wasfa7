@@ -27,7 +27,7 @@ class _TabsScreenState extends State<TabsScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       Provider.of<MealProvider>(context,listen: false).getData();
       Provider.of<ThemeProvider>(context,listen: false).getThemeMode();
-      Provider.of<ThemeProvider>(context,listen: false).getThemeColors();
+      // Provider.of<ThemeProvider>(context,listen: false).getThemeColors();
       Provider.of<LanguageProvider>(context,listen: false).getLan();
       super.initState();
     });
@@ -54,7 +54,8 @@ class _TabsScreenState extends State<TabsScreen> {
         child: Scaffold(
       drawer:  const MainDrawer(),
       appBar: AppBar(
-         title: Text(pages![currentIndex]['title'] as String),
+        iconTheme: IconThemeData(color: Theme.of(context).iconTheme.color),
+         title: Text(pages![currentIndex]['title'] as String,style: Theme.of(context).textTheme.bodyText1,),
       ),
       body: pages![currentIndex]['page'] as Widget,
       bottomNavigationBar: BottomNavigationBar(
@@ -71,16 +72,10 @@ class _TabsScreenState extends State<TabsScreen> {
         ],
         onTap: changeIndex,
         currentIndex: currentIndex,
-        backgroundColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Theme.of(context).accentColor,
+        backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+        unselectedItemColor: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+        selectedItemColor: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
       ),
     ));
-  }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    // animationController.dispose() instead of your controller.dispose
   }
 }

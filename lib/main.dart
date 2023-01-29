@@ -1,6 +1,7 @@
 import 'package:akht2r/core/provider/app_provider.dart';
 import 'package:akht2r/core/provider/language_provider.dart';
 import 'package:akht2r/core/provider/theme_provider.dart';
+import 'package:akht2r/core/styles/styles.dart';
 import 'package:akht2r/feature/screens/filter_screen.dart';
 import 'package:akht2r/feature/screens/meal_detils_screen.dart';
 import 'package:akht2r/feature/screens/on_boarding_screen.dart';
@@ -34,32 +35,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var primaryColor= Provider.of<ThemeProvider>(context,listen: true).primaryColor;
-    var accentColor= Provider.of<ThemeProvider>(context,listen: true).accentColor;
+
     var tm= Provider.of<ThemeProvider>(context,listen: true).tm;
     var lan = Provider.of<LanguageProvider>(context,listen: true);
     return Directionality(
       textDirection: lan.isEn ?TextDirection.ltr:TextDirection.rtl,
       child: MaterialApp(
         title: 'wasfa7',
-        theme: ThemeData(
-          primarySwatch:primaryColor,
-          accentColor: accentColor,
-          canvasColor: const Color.fromRGBO(255, 254, 229, 1),
-          fontFamily: 'Raleway',
-          textTheme: ThemeData.light().textTheme.copyWith(
-              bodyText1: const TextStyle(
-                color: Color.fromRGBO(20, 51, 51, 1),
-              ),
-              bodyText2: const TextStyle(
-                color: Color.fromRGBO(20, 51, 51, 1),
-              ),
-              subtitle1: const TextStyle(
-                fontSize: 20,
-                fontFamily: 'RobotoCondensed',
-                fontWeight: FontWeight.bold,
-              )),
-        ),
+        theme: lightTheme,
+        darkTheme: darkTheme,
         themeMode: tm,
         debugShowCheckedModeBanner: false,
         // home: const CategoriesScreen(),

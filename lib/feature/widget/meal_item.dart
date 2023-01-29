@@ -99,7 +99,7 @@ class MealItem extends StatelessWidget {
                     ),
                     child: Text(
                      lan.getTexts('meal-$id'),
-                      style: TextStyle(color: Colors.white,fontSize: 26),
+                      style: Theme.of(context).textTheme.bodyText1,
                       softWrap: true,
                       overflow: TextOverflow.fade,
                     ),
@@ -116,15 +116,15 @@ class MealItem extends StatelessWidget {
                     children: <Widget>[
                        Icon(
                         Icons.schedule,
-                        color: Colors.black,
+                        color: Theme.of(context).iconTheme.color,
                       ),
                       const SizedBox(
                         width: 6,
                       ),
                       if(duration <= 10)
-                      Text('$duration '+ lan.getTexts('min2'),),
+                      Text('$duration '+ lan.getTexts('min2'),style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 16)),
                       if(duration > 10)
-                      Text("$duration "+ lan.getTexts('min'),),
+                      Text("$duration "+ lan.getTexts('min'),style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 16)),
 
                     ],
                   ),
@@ -132,25 +132,24 @@ class MealItem extends StatelessWidget {
                     children: <Widget>[
                        Icon(
                         Icons.work,
-                         color: Colors.black,
-
-                      ),
+                         color: Theme.of(context).iconTheme.color,
+                       ),
                       const SizedBox(
                         width: 6,
                       ),
-                      Text(lan.getTexts('$complexity'),),
+                      Text(lan.getTexts('$complexity'),style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 16)),
                     ],
                   ),
                   Row(
                     children: <Widget>[
                        Icon(
                         Icons.attach_money,
-                         color: Colors.black,
-                      ),
+                         color: Theme.of(context).iconTheme.color,
+                       ),
                       const SizedBox(
                         width: 6,
                       ),
-                      Text(lan.getTexts('$affordability'),),
+                      Text(lan.getTexts('$affordability'),style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 16)),
                     ],
                   ),
                 ],

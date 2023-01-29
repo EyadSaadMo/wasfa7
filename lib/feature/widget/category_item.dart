@@ -21,7 +21,7 @@ class CategoryItem extends StatelessWidget {
 
     return InkWell(
        onTap: () => selectCategory(context),
-      splashColor: Theme.of(context).primaryColor,
+      splashColor: Theme.of(context).appBarTheme.backgroundColor,
       borderRadius: BorderRadius.circular(15),
       child: Container(
         padding: const EdgeInsets.all(15),
@@ -37,7 +37,7 @@ class CategoryItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Text(
-        lan.getTexts('cat-$id'),style: Theme.of(context).textTheme.headline6,
+        lan.getTexts('cat-$id'),style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
     );

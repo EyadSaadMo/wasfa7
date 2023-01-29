@@ -18,33 +18,19 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       child: Text(
-        text,
-        style: Theme
-            .of(context)
-            .textTheme
-            .headline6,
+        text, style: Theme.of(context).textTheme.bodyText1,
         textAlign: TextAlign.center,
       ),
     );
   }
 
   Widget buildContainer(Widget child) {
-    bool isLandScape =
-        MediaQuery
-            .of(context)
-            .orientation == Orientation.landscape;
-    var deviceWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    var deviceHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    bool isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
+    var deviceWidth = MediaQuery.of(context).size.width;
+    var deviceHeight = MediaQuery.of(context).size.height;
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.grey),
+        color:Theme.of(context).cardTheme.color,
         borderRadius: BorderRadius.circular(10),
       ),
       margin: const EdgeInsets.all(15),
@@ -59,33 +45,23 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
 
   @override
   void didChangeDependencies() {
-    mealId = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as String;
+    mealId = ModalRoute.of(context)!.settings.arguments as String;
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isLandScape =
-        MediaQuery
-            .of(context)
-            .orientation == Orientation.landscape;
-    var accentColor = Theme
-        .of(context)
-        .accentColor;
+    bool isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
     var lan = Provider.of<LanguageProvider>(context, listen: true);
     final selectedMeal = DUMMY_MEALS.firstWhere((meal) => meal.id == mealId);
-
     List<String> liIngredientList =
     lan.getTexts('steps-$mealId') as List<String>;
     var liSteps = ListView.builder(
-      padding: EdgeInsets.all(0),
+      padding: const EdgeInsets.all(0),
       itemBuilder: (ctx, index) =>
           Container(
             decoration: BoxDecoration(
-              color: accentColor,
+              color: Theme.of(context).cardTheme.color,
             ),
             child: Column(
               children: [
@@ -115,7 +91,7 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
       padding: EdgeInsets.all(0),
       itemBuilder: (ctx, index) {
         return Card(
-            color: accentColor,
+            color: Theme.of(context).cardTheme.color,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Text(
@@ -149,8 +125,11 @@ class _MealDetailsScreenState extends State<MealDetailsScreen> {
           SliverAppBar(
             expandedHeight: 300,
             pinned: true,
+            iconTheme: IconThemeData(
+              color: Theme.of(context).iconTheme.color,
+            ),
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(lan.getTexts('meal-$mealId')),
+              title: Text(lan.getTexts('meal-$mealId'),style: Theme.of(context).textTheme.bodyText1,),
               background:Hero(
                 tag: mealId!,
                 child: InteractiveViewer(
